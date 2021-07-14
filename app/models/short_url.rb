@@ -22,6 +22,7 @@
 class ShortUrl < ApplicationRecord
   validates :long_url, format: URI::DEFAULT_PARSER.make_regexp(%w[http https])
   validates_length_of :long_url, within: 3..255, on: :create, message: 'too long'
+  validates :long_url, uniqueness: { scope: :user_id }
   before_create :shorten_url
   belongs_to :user
 
